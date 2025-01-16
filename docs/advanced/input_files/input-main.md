@@ -191,6 +191,7 @@
     - [bessel\_descriptor\_smooth](#bessel_descriptor_smooth)
     - [bessel\_descriptor\_sigma](#bessel_descriptor_sigma)
     - [deepks\_bandgap](#deepks_bandgap)
+    - [deepks\_bandgap\_idx](#deepks_bandgap_idx)
     - [deepks\_v\_delta](#deepks_v_delta)
     - [deepks\_out\_unittest](#deepks_out_unittest)
   - [OFDFT: orbital free density functional theory](#ofdft-orbital-free-density-functional-theory)
@@ -2081,10 +2082,15 @@ Warning: this function is not robust enough for the current version. Please try 
 
 ### deepks_bandgap
 
-- **Type**: Boolean
+- **Type**: int
 - **Availability**: numerical atomic orbital basis and `deepks_scf` is true
-- **Description**: include bandgap label for DeePKS training
-- **Default**: False
+- **Description**: include bandgap label for DeePKS training. When `deepks_bandgap` = 1, ABACUS will calculate the bandgap according to the highest occupied state and the lowest unoccupied state. When `deepks_bandgap` = 2 and `deepks_bandgap_idx` are provided, ABACUS will calculate the bandgap according to the band indexes provided by the user.
+- **Default**: 0
+
+### deepks_bandgap_idx
+- **Type**: vector of int
+- **Availability**: numerical atomic orbital basis and `deepks_scf` is true and `deepks_bandgap` = 2
+- **Description**: The band indexes for calculating the bandgap. The band indexes start from 1. ABACUS will calculate the band gap of each two band indexes provided by the user. For example, if `deepks_bandgap_idx` = 1 2 3 4, ABACUS will calculate the band gap between band 1 and 2, band 3 and 4, respectively.
 
 ### deepks_v_delta
 

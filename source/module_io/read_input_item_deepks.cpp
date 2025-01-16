@@ -42,8 +42,32 @@ void ReadInput::item_deepks()
     }
     {
         Input_Item item("deepks_bandgap");
-        item.annotation = ">0 for bandgap label";
-        read_sync_bool(input.deepks_bandgap);
+        item.annotation = ">0 for bandgap label. 1 for occupied-unoccupied bandgap, 2 for self-appointed bandgap";
+        read_sync_int(input.deepks_bandgap);
+        item.check_value = [](const Input_Item& item, const Parameter& para) {
+            if (para.input.deepks_bandgap == 2){
+                if (para.input.deepks_band_idx.empty() || para.input.deepks_band_idx.size() % 2 != 0)
+                {
+                    ModuleBase::WARNING_QUIT("ReadInput", "even number of deepks_band_idx must be set for self-appointed bandgap");
+                }
+            }
+        };
+        this->add_item(item);
+    }
+    {
+        Input_Item item("deepks_band_idx");
+        item.annotation = "band index for self-appointed bandgap";
+        item.read_value = [](const Input_Item& item, Parameter& para) {
+            size_t count = item.get_size();
+            for (int i = 0; i < count; i++)
+            {
+                para.input.deepks_band_idx.push_back(std::stoi(item.str_values[i]));
+            }
+        };
+        item.reset_value = [](const Input_Item& item, Parameter& para) {
+            if (para.input.deepks_band_idx.empty()) { para.input.deepks_band_idx.push_back(0); }
+        };
+        sync_intvec(input.deepks_band_idx, para.input.deepks_band_idx.size(), 0);
         this->add_item(item);
     }
     {

@@ -100,7 +100,7 @@ void LCAO_Deepks_Interface<TK, TR>::out_deepks_labels(const double& etot,
         }
     }
 
-    // Used for deepks_bandgap == 1 and deepks_v_delta > 0
+    // Used for deepks_bandgap > 0 and deepks_v_delta > 0
     std::vector<std::vector<TK>>* h_delta = nullptr;
     if constexpr (std::is_same<TK, double>::value)
     {
@@ -187,7 +187,7 @@ void LCAO_Deepks_Interface<TK, TR>::out_deepks_labels(const double& etot,
         }
 
         // Bandgap Part
-        if (PARAM.inp.deepks_bandgap)
+        if (PARAM.inp.deepks_bandgap > 0)
         {
             const int nocc = (PARAM.inp.nelec + 1) / 2;
             ModuleBase::matrix o_tot(nks, 1);

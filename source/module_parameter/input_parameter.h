@@ -265,13 +265,14 @@ struct Input_para
                                       ///< descriptors for training, wenfei 2022-1-12
     bool deepks_scf = false;          ///< (need libnpy and libtorch) if set to true, a trained model
                                       ///< would be needed to calculate V_delta and F_delta
-    bool deepks_bandgap = false;      ///< for bandgap label. QO added 2021-12-15
+    int deepks_bandgap = 0;           ///< for bandgap label. QO added 2021-12-15; renxi change to int 1: old method; 2: use deepks_band_idx.
     int deepks_v_delta = 0;           ///< for v_delta label. xuan added
     bool deepks_equiv = false;        ///< whether to use equivariant version of DeePKS
     bool deepks_out_unittest = false; ///< if set to true, prints intermediate quantities that shall
                                       ///< be used for making unit test
     std::string deepks_model = "None";              ///< needed when deepks_scf=1
-    
+    std::vector<int> deepks_band_idx = {0}; /// < for bandgap index label. renxi add 2025-1-16
+
     int bessel_descriptor_lmax = 2;                 ///< lmax used in descriptor
     std::string bessel_descriptor_ecut = "default"; ///< energy cutoff for spherical bessel functions(Ry)
     double bessel_descriptor_tolerence = 1e-12;     ///< tolerance for spherical bessel root
